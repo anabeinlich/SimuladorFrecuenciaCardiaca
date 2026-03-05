@@ -24,7 +24,7 @@ public class UIController : MonoBehaviour
         HoverPantallaExit(); 
     }
 
-    // --- BOTÓN CORAZÓN ---
+    //  BOTÓN CORAZÓN 
     public void HoverCorazonEnter()
     {
         if (luzSpotCorazon != null) luzSpotCorazon.enabled = true;
@@ -40,7 +40,7 @@ public class UIController : MonoBehaviour
         SceneManager.LoadScene("HeartInspection");
     }
 
-    // --- BOTÓN PANTALLA ---
+    // BOTÓN PANTALLA 
     public void HoverPantallaEnter()
     {
         if (monitorRenderer != null)
@@ -66,13 +66,13 @@ public class UIController : MonoBehaviour
         if (panelSimuladorUI != null) panelSimuladorUI.SetActive(true);
     }
 
-    // --- BOTÓN DATOS ---
+    // BOTÓN DATOS
     public void ClickDatos()
     {
         if (panelDatosUI != null) panelDatosUI.SetActive(true);
     }
 
-    // --- CERRAR PANELES / VOLVER ---
+    // CERRAR PANELES / VOLVER
     public void CerrarPaneles()
     {
         if (panelSimuladorUI != null) panelSimuladorUI.SetActive(false);
