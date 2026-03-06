@@ -73,9 +73,12 @@ public class UIController : MonoBehaviour
     }
 
     // CERRAR PANELES / VOLVER
-    public void CerrarPaneles()
+    public void CerrarPanelData()
+    {
+        if (panelDatosUI != null) panelDatosUI.SetActive(false);
+    }
+    public void CerrarPanelFC()
     {
         if (panelSimuladorUI != null) panelSimuladorUI.SetActive(false);
-        if (panelDatosUI != null) panelDatosUI.SetActive(false);
     }
 }

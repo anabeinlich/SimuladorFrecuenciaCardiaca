@@ -89,7 +89,7 @@ public class FCManager : MonoBehaviour
             if (textoParoCardiaco != null) textoParoCardiaco.gameObject.SetActive(true);
 
             // Aplanar la onda 
-            if (rectTransformECG != null) rectTransformECG.localScale = new Vector3(1f, 0.04f, 1f);
+            if (rectTransformECG != null) rectTransformECG.localScale = new Vector3(1f, 0.1f, 1f);
             if (iconoCorazon != null) iconoCorazon.color = Color.gray; 
         }
         else if (oxigenoActual <= 85f)
@@ -126,5 +126,16 @@ public class FCManager : MonoBehaviour
 
         // ACTUALIZAR EL MONITOR 
         if (fcText != null) fcText.text = $"{Mathf.RoundToInt(fcFinal)} BPM";
+    }
+
+    public void BotonGuardarDatos()
+    {
+        RegistroPaciente nuevo = new RegistroPaciente();
+        nuevo.hora = System.DateTime.Now.ToString("HH:mm:ss");
+        nuevo.paciente = dropdownPaciente.options[dropdownPaciente.value].text;
+        nuevo.bpm = Mathf.RoundToInt(fcFinal);
+        nuevo.parametros = $"Act: {sliderActividad.value}% | Est: {sliderEstres.value}% | O2: {sliderOxigeno.value}%";
+
+        DataManager.Instancia.GuardarRegistro(nuevo);
     }
 }
