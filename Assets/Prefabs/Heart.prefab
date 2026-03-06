@@ -71,6 +71,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 96daa3ffd30e2004d8a87d26567c28e4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 620836048529968578}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 96daa3ffd30e2004d8a87d26567c28e4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8914079694220589877}
   m_SourcePrefab: {fileID: 100100000, guid: 96daa3ffd30e2004d8a87d26567c28e4, type: 3}
 --- !u!1 &4269946001636870167 stripped
 GameObject:
@@ -90,3 +93,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadRotacion: 5
+--- !u!114 &8914079694220589877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4269946001636870167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 638901190b938d341b9914be80e78d99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  escalaBase: 1
+  escalaMaxLatido: 1.15
+  duracionLatido: 0.2
