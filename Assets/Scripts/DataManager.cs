@@ -4,8 +4,10 @@ using UnityEngine;
 [System.Serializable]
 public class RegistroPaciente
 {
+    public int numeroPaciente;
     public string hora;
     public string paciente;
+    public int edad;
     public int bpm;
     public string parametros; 
 }

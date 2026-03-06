@@ -131,10 +131,18 @@ public class FCManager : MonoBehaviour
     public void BotonGuardarDatos()
     {
         RegistroPaciente nuevo = new RegistroPaciente();
+
+        nuevo.numeroPaciente = DataManager.Instancia.historial.Count + 1;
         nuevo.hora = System.DateTime.Now.ToString("HH:mm:ss");
         nuevo.paciente = dropdownPaciente.options[dropdownPaciente.value].text;
+
+        int.TryParse(inputEdad.text, out int edadGuardada);
+        nuevo.edad = edadGuardada == 0 ? 25 : edadGuardada;
         nuevo.bpm = Mathf.RoundToInt(fcFinal);
-        nuevo.parametros = $"Act: {sliderActividad.value}% | Est: {sliderEstres.value}% | O2: {sliderOxigeno.value}%";
+
+        string estadoMedicion = toggleMedica.isOn ? "Sí" : "No";
+
+        nuevo.parametros = $"Act: {sliderActividad.value}% | Est: {sliderEstres.value}% | O2: {sliderOxigeno.value}% | Med: {estadoMedicion}";
 
         DataManager.Instancia.GuardarRegistro(nuevo);
     }
