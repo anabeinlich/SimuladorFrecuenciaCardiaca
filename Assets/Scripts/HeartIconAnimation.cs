@@ -29,6 +29,13 @@ public class HeartIconAnimation : MonoBehaviour
     {
         if (managerSimulador == null || iconoCorazon == null) return;
 
+        if (managerSimulador.fcFinal <= 0f)
+        {
+            estaLatiendo = false;
+            iconoCorazon.rectTransform.localScale = tamanoBaseOriginal; 
+            return;
+        }
+
         float intervalo = 60f / managerSimulador.fcFinal;
 
         timerIntervalo += Time.deltaTime;

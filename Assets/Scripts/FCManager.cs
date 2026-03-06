@@ -5,7 +5,13 @@ using UnityEngine.UI;
 public class FCManager : MonoBehaviour
 {
     [Header("UI - Textos Principales")]
-    public TextMeshProUGUI fcText; 
+    public TextMeshProUGUI fcText;
+    public Image iconoCorazon;
+
+    [Header("UI - Alertas")]
+    public TextMeshProUGUI iconoAlertaOxigeno; 
+    public TextMeshProUGUI textoParoCardiaco;  
+    public RectTransform rectTransformECG;    
 
     [Header("UI - Textos de Valores (0 a 100)")]
     public TextMeshProUGUI textoValorActividad;
@@ -25,6 +31,8 @@ public class FCManager : MonoBehaviour
 
     void Start()
     {
+        if (iconoAlertaOxigeno != null) iconoAlertaOxigeno.gameObject.SetActive(false);
+        if (textoParoCardiaco != null) textoParoCardiaco.gameObject.SetActive(false);
         CalcularFC();
     }
 
@@ -58,10 +66,63 @@ public class FCManager : MonoBehaviour
         // Medicación (M)
         float M = toggleMedica.isOn ? -12f : 0f;
 
-        // Cálculo Final y Clamp (Límite fisiológico)
+        // Cálculo Final y limites
         fcFinal = fcBase + A + E + O + C + M;
         fcFinal = Mathf.Clamp(fcFinal, 40f, 180f);
 
+        // Hipoxia
+        float oxigenoActual = sliderOxigeno.value;
+
+        if (oxigenoActual <= 60f)
+        {
+            // PARO CARDÍACO (MENOS DE 60%) 
+            fcFinal = 0f;
+            fcText.text = "0 BPM";
+
+            // "!" en rojo
+            if (iconoAlertaOxigeno != null)
+            {
+                iconoAlertaOxigeno.gameObject.SetActive(true);
+                iconoAlertaOxigeno.color = Color.red;
+            }
+            // Texto de Paro
+            if (textoParoCardiaco != null) textoParoCardiaco.gameObject.SetActive(true);
+
+            // Aplanar la onda 
+            if (rectTransformECG != null) rectTransformECG.localScale = new Vector3(1f, 0.04f, 1f);
+            if (iconoCorazon != null) iconoCorazon.color = Color.gray; 
+        }
+        else if (oxigenoActual <= 85f)
+        {
+            // ALERTA CRÍTICA (61% a 85%) 
+            fcText.text = $"{Mathf.RoundToInt(fcFinal)} BPM";
+
+            // "!" en amarillo
+            if (iconoAlertaOxigeno != null)
+            {
+                iconoAlertaOxigeno.gameObject.SetActive(true);
+                iconoAlertaOxigeno.color = Color.yellow;
+            }
+            // Ocultar Texto de Paro
+            if (textoParoCardiaco != null) textoParoCardiaco.gameObject.SetActive(false);
+
+            // Restaurar onda y corazón
+            if (rectTransformECG != null) rectTransformECG.localScale = new Vector3(1f, 1f, 1f);
+            if (iconoCorazon != null) iconoCorazon.color = Color.red;
+        }
+        else
+        {
+            // === ESTADO NORMAL (Más de 85%) ===
+            fcText.text = $"{Mathf.RoundToInt(fcFinal)} BPM";
+
+            // Ocultar alertas
+            if (iconoAlertaOxigeno != null) iconoAlertaOxigeno.gameObject.SetActive(false);
+            if (textoParoCardiaco != null) textoParoCardiaco.gameObject.SetActive(false);
+
+            // Restaurar onda y corazón
+            if (rectTransformECG != null) rectTransformECG.localScale = new Vector3(1f, 1f, 1f);
+            if (iconoCorazon != null) iconoCorazon.color = Color.red;
+        }
 
         // ACTUALIZAR EL MONITOR 
         if (fcText != null) fcText.text = $"{Mathf.RoundToInt(fcFinal)} BPM";
