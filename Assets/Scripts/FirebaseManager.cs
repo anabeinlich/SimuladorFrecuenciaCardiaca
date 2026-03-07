@@ -9,6 +9,7 @@ public class FirebaseManager : MonoBehaviour
 {
     private DatabaseReference databaseReference;
     private bool firebaseListo = false;
+    private string idSesion;
 
     [Serializable]
     public class RegistroConFecha
@@ -35,6 +36,8 @@ public class FirebaseManager : MonoBehaviour
 
     void Start()
     {
+        idSesion = "Sesion_" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
+
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             if (task.Result == DependencyStatus.Available)
@@ -73,11 +76,11 @@ public class FirebaseManager : MonoBehaviour
 
             string json = JsonUtility.ToJson(datoFinal);
 
-            databaseReference.Child("Pacientes_Historial").Push().SetRawJsonValueAsync(json).ContinueWithOnMainThread(task =>
+            databaseReference.Child("Sesiones").Child(idSesion).Child("Paciente_" + reg.numeroPaciente).SetRawJsonValueAsync(json).ContinueWithOnMainThread(task =>
             {
                 if (task.IsCompleted)
                 {
-                    Debug.Log("¡Registro subido a Firebase con éxito!");
+                    Debug.Log($"¡Paciente #{reg.numeroPaciente} subido con éxito a la sesión {idSesion}!");
                 }
                 else
                 {
