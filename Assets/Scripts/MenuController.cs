@@ -13,4 +13,9 @@ public class MenuController: MonoBehaviour
         Debug.Log("Saliste del simulador");
         Application.Quit();
     }
+
+    public void VolverAlMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }
