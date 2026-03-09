@@ -29,6 +29,9 @@ public class FCManager : MonoBehaviour
     [Header("Variables Internas")]
     public float fcFinal;
 
+    [Header("Para el audio")]
+    public AudioECG monitorAudio;
+
     void Start()
     {
         if (iconoAlertaOxigeno != null) iconoAlertaOxigeno.gameObject.SetActive(false);
@@ -126,6 +129,11 @@ public class FCManager : MonoBehaviour
 
         // ACTUALIZAR EL MONITOR 
         if (fcText != null) fcText.text = $"{Mathf.RoundToInt(fcFinal)} BPM";
+
+        if (monitorAudio != null)
+        {
+            monitorAudio.RecibirBPMCalculado(Mathf.RoundToInt(fcFinal));
+        }
     }
 
     public void BotonGuardarDatos()
